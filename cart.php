@@ -1,5 +1,19 @@
 <?php
-//1.  DB接続します xxxにDB名を入れます
+if(
+!isset()
+
+
+
+)
+
+
+
+//データベース取得
+$ordernumber=$_POST["quantity"]
+
+
+
+
 try {
 $pdo = new PDO('mysql:dbname=shopping_db;charset=utf8;host=localhost','root','');
 } catch (PDOException $e) {
@@ -21,7 +35,7 @@ if($status==false){
   //Selectデータの数だけ自動でループしてくれる $resultの中に「カラム名」が入ってくるのでそれを表示させる例
   while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
     $view .= "<p>";
-    $view .= $result["id"].":".$result["name"].",".$result["naiyou"];
+    $view .= $result["id"].":".$result["name"].",".$result["cost"];
     $view .= "</p>";
   }
 
@@ -41,8 +55,7 @@ if($status==false){
 <style>div{padding: 10px;font-size:16px;}</style>
 </head>
 <body id="main">
-<!-- Head[Start] -->
-<header>
+<header class="header">OWARAIOWARAIOWARIOWARAI</header>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -50,14 +63,11 @@ if($status==false){
       </div>
     </div>
   </nav>
-</header>
-<!-- Head[End] -->
-
-<!-- Main[Start] $view-->
 <div>
     <div class="container jumbotron"><?=$view?></div>
 </div>
-<!-- Main[End] -->
 
+
+<footer class="footer">OWARAIOWARAIOWARIOWARAI</footer>
 </body>
 </html>

@@ -1,6 +1,17 @@
-.a1 {
-  display: flex;
-  flex-wrap: wrap;
-  height: 500px;
-  width: 500px;
+body {
+  background-color: yellow;
+}
+
+.header {
+  text-align: center;
+  background-color: coral;
+}
+
+.footer {
+  text-align: center;
+  background-color: coral;
+}
+
+.item {
+  outline-color: solid 1px black;
 }

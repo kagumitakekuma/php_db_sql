@@ -7,9 +7,7 @@
   <style>div{padding: 10px;font-size:16px;}</style>
 </head>
 <body>
-
-<!-- Main[Start] -->
-<!-- ここからinsert.phpにデータを送ります -->
+<header class="header">OWARAIOWARAIOWARIOWARAI</header>
 <form method="post" action="login_act.php">
   <div class="box">
    <fieldset>
@@ -20,8 +18,6 @@
     </fieldset>
   </div>
 </form>
-<!-- Main[End] -->
-
-
+<footer class="footer">OWARAIOWARAIOWARIOWARAI</footer>
 </body>
 </html>
