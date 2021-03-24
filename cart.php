@@ -1,17 +1,8 @@
 <?php
-if(
-!isset()
 
-
-
-)
-
-
-
-//データベース取得
-$ordernumber=$_POST["quantity"]
-
-
+// session_start();
+//     $_SESSION['cart']=[];       
+//     $_SESSION['cart'][]=$_POST['itemname']; 
 
 
 try {
@@ -20,28 +11,31 @@ $pdo = new PDO('mysql:dbname=shopping_db;charset=utf8;host=localhost','root','')
   exit('データベースに接続できませんでした。'.$e->getMessage());
 }
 
-//２．データ登録SQL作成
-//作ったテーブル名を書く場所  xxxにテーブル名を入れます
-$stmt = $pdo->prepare("SELECT * FROM order_table");
-$status = $stmt->execute();
+$sql= "SELECT *FROM item_table WHERE itemname=:iname AND itemcost=:icost AND quantity=:quantity";
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':iname', $iname); 
+$stmt->bindValue(':icost', $icost); 
+$stmt->bindValue(':quantity', $quantity); 
+$res = $stmt->execute();
 
-//３．データ表示
-$view="";
-if($status==false){
-  //execute（SQL実行時にエラーがある場合）
-  $error = $stmt->errorInfo();
-  exit("ErrorQuery:".$error[2]);
-}else{
-  //Selectデータの数だけ自動でループしてくれる $resultの中に「カラム名」が入ってくるのでそれを表示させる例
-  while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-    $view .= "<p>";
-    $view .= $result["id"].":".$result["name"].",".$result["cost"];
-    $view .= "</p>";
-  }
-
+if($res==false){
+$error = $stmt->errorInfo();
+exit("QueryError:".$error[2]);
 }
-?>
 
+//抽出データ数取得(1レコードだけを抽出)
+$val= $stmt->fetch();
+
+if( $val["id"]  != ""){
+    $_SESSION["chk_ssid"] =session_id();
+    $_SESSION["itemname"] =$val["itemname"];
+    header("Location: index.php");
+}else{
+    header("Location: login.php");
+}
+exit();
+
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -56,14 +50,7 @@ if($status==false){
 </head>
 <body id="main">
 <header class="header">OWARAIOWARAIOWARIOWARAI</header>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">カート</a>
-      </div>
-    </div>
-  </nav>
-<div>
+       <a class="navbar-brand" href="index3.php">トップへ戻る</a>
     <div class="container jumbotron"><?=$view?></div>
 </div>
 

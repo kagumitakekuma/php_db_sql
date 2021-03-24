@@ -1,0 +1,19 @@
+body {
+  background-color: yellow;
+}
+
+.header {
+  text-align: center;
+  background-color: coral;
+}
+
+.footer {
+  text-align: center;
+  background-color: coral;
+}
+
+table {
+  background-color: orange;
+  height: 500px;
+  width: 100%;
+}

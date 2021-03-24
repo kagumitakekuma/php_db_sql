@@ -27,7 +27,7 @@ $val= $stmt->fetch();
 if( $val["id"]  != ""){
     $_SESSION["chk_ssid"] =session_id();
     $_SESSION["username"] =$val["username"];
-    header("Location: index.php");
+    header("Location: index3.php");
 }else{
     header("Location: login.php");
 }
