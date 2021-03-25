@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>一発ギャグ購入処</title>
   <link href="css/style.css" rel="stylesheet">
-  <style>div{padding: 10px;font-size:16px;}</style>
+  <!-- <style>div{padding: 10px;font-size:16px;}</style> -->
 </head>
 <body>
 <header class="header">OWARAIOWARAIOWARIOWARAI</header>

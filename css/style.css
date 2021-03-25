@@ -1,5 +1,6 @@
 body {
   background-color: yellow;
+  font-family: "游明朝";
 }
 
 .header {
@@ -12,6 +13,8 @@ body {
   background-color: coral;
 }
 
-.item {
-  outline-color: solid 1px black;
+table {
+  background-color: orange;
+  height: 500px;
+  width: 100%;
 }

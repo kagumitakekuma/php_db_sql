@@ -1,18 +1,15 @@
 <?php
-// if(
-//     !isset ($_POST["itemid"]) || $_POST["itemid"] == "" ||
-//     !isset ($_POST["itemname"]) || $_POST["itemname"] == "" ||
-//     !isset ($_POST["itemcost"]) || $_POST["itemcost"] == "" ||
-//     !isset ($_POST["quantity"]) || $_POST["quantity"] == ""
-// ){
-//     exit("paramError");
-// }
-//1. POSTデータ取得
-//まず前のphpからデーターを受け取る（この受け取ったデータをもとにbindValueと結びつけるため）
-// $itemid = $_POST[$row["itemid"]];
-// $itemname = $_POST[$row["itemname"]];
-// $itemcost= $_POST[$row["itemcost"]];
-// $quantity = $_POST[$row["quantity"]];
+if(
+    !isset ($_POST["itemid"]) || $_POST["itemid"] == "" ||
+    !isset ($_POST["itemname"]) || $_POST["itemname"] == "" ||
+    !isset ($_POST["itemcost"]) || $_POST["itemcost"] == "" ||
+    !isset ($_POST["quantity"]) || $_POST["quantity"] == ""
+){
+    exit("paramError");
+}
+// 1. POSTデータ取得
+// まず前のphpからデーターを受け取る（この受け取ったデータをもとにbindValueと結びつけるため）
+
 $itemid = $_POST["itemid"];
 $itemname = $_POST["itemname"];
 $itemcost= $_POST["itemcost"];
@@ -20,8 +17,6 @@ $quantity = $_POST["quantity"];
 
 //2. DB接続します xxxにDB名を入力する
 //ここから作成したDBに接続をしてデータを登録します xxxxに作成したデータベース名を書きます
-// mamppの方は
-// $pdo = new PDO('mysql:dbname=a_db;charset=utf8;host=localhost', 'root', '');
 
 try {
     $pdo = new PDO('mysql:dbname=shopping_db;charset=utf8;host=localhost', 'root', '');
@@ -45,9 +40,52 @@ if ($status==false) {
     //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
     $error = $stmt->errorInfo();
     exit("QueryError:".$error[2]);
-} else {
-    //５．index.phpへリダイレクト 書くときにLocation: in この:　のあとは半角スペースがいるので注意！！
-    header("Location: cart.php");
-    exit;
 }
+// } else {
+//     //５．index.phpへリダイレクト 書くときにLocation: in この:　のあとは半角スペースがいるので注意！！
+//     header("Location: cart.php");
+//     exit;
+// }
 ?>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>一発ギャグ購入処</title>
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">◆OWARAIOWARAIOWARIOWARAI◆</header>
+
+<h2>カートの中身</h2>
+<table border="1" >
+<tr class="item">
+<th>商品コード</th>
+<th>商品名</th>
+<th>価格</th>
+<th>数量</th>
+<th class="order">注文しちゃう？</th>
+</tr>
+<form method="POST" action="cart.php" class="form">
+<tr class="list">
+<th><input type="hidden" name="itemid" value="<?=$itemid?>"> <?=$itemid?> </th>
+<th><input type="hidden" name="itemname" value="<?=$itemname?>"> <?=$itemname?> </th>
+<th><input type="hidden" name="itemcost" value="<?=$itemcost?>"> <?=$itemcost?> </th>
+<th><input type="hidden" name="quantity"value="<?=$quantity?>"> <?=$quantity?></th>
+<th><input type="submit" value="しちゃう"　class="order1"></th>
+</tr>
+</form>
+<?php
+$pdo=null;
+?>
+</table>
+
+<p>注文しない方はこちらへ</p>
+    <div><a class="navbar-brand" href="index.php">トップへ戻る</a></div>
+    </div>
+<footer class="footer">◆OWARAIOWARAIOWARIOWARAI◆</footer>
+
+</body>
+</html>

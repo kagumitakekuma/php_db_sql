@@ -1,8 +1,13 @@
 <?php
 
-// session_start();
-//     $_SESSION['cart']=[];       
-//     $_SESSION['cart'][]=$_POST['itemname']; 
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
+$itemid = $_POST["itemid"];
+$itemname = $_POST["itemname"];
+$itemcost= $_POST["itemcost"];
+$quantity = $_POST["quantity"];
 
 
 try {
@@ -11,29 +16,23 @@ $pdo = new PDO('mysql:dbname=shopping_db;charset=utf8;host=localhost','root','')
   exit('データベースに接続できませんでした。'.$e->getMessage());
 }
 
-$sql= "SELECT *FROM item_table WHERE itemname=:iname AND itemcost=:icost AND quantity=:quantity";
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':iname', $iname); 
-$stmt->bindValue(':icost', $icost); 
-$stmt->bindValue(':quantity', $quantity); 
-$res = $stmt->execute();
+//２．データ登録SQL作成
+//作ったテーブル名を書く場所  xxxにテーブル名を入れます
+$stmt = $pdo->prepare("SELECT * FROM order_table");
+$status = $stmt->execute();
 
-if($res==false){
-$error = $stmt->errorInfo();
-exit("QueryError:".$error[2]);
-}
-
-//抽出データ数取得(1レコードだけを抽出)
-$val= $stmt->fetch();
-
-if( $val["id"]  != ""){
-    $_SESSION["chk_ssid"] =session_id();
-    $_SESSION["itemname"] =$val["itemname"];
-    header("Location: index.php");
+//３．データ表示
+$view="";
+if($status==false){
+  //execute（SQL実行時にエラーがある場合）
+  $error = $stmt->errorInfo();
+  exit("ErrorQuery:".$error[2]);
 }else{
-    header("Location: login.php");
-}
-exit();
+   $result = $stmt->fetch();
+    $view .= "<p>カートの中身を表示</P>";
+    $view .= $result["itemid"].":".$result["itemname"].",".$result["itemcost"].",".$result["quantity"];
+    $view .= "</p>";
+  }
 
 ?>
 
@@ -41,20 +40,45 @@ exit();
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>一発ギャグ購入処</title>
-<link rel="stylesheet" href="css/range.css">
 <link href="css/style.css" rel="stylesheet">
-<style>div{padding: 10px;font-size:16px;}</style>
+
 </head>
-<body id="main">
-<header class="header">OWARAIOWARAIOWARIOWARAI</header>
-       <a class="navbar-brand" href="index3.php">トップへ戻る</a>
-    <div class="container jumbotron"><?=$view?></div>
-</div>
+<body>
+<header class="header">◆OWARAIOWARAIOWARIOWARAI◆</header>
+<h2>カートの中身</h2>
+<table border="1" >
+<tr class="item">
+<th>商品コード</th>
+<th>商品名</th>
+<th>価格</th>
+<th>数量</th>
+<th class="order2">本当にいいの？</th>
+</tr>
+<form method="POST" action="order.php" class="form">
+<tr class="list">
+<th> <?=$itemid?></th>
+<th> <?=$itemname?></th>
+<th> <?=$itemcost?></th>
+<th> <?=$quantity?></th>
+
+<th><input type="submit" value="いいよ！！！" class="order3"></th>
+</tr>
+</form>
+<?php
+$pdo=null;
+?>
+</table>
+
+<p>やっぱりいらないという方はこちらへ</p>
+    <div><a class="navbar-brand" href="index.php">トップへ戻る</a></div>
+    </div>
+
+
+</body>
+</html>
 
 
 <footer class="footer">OWARAIOWARAIOWARIOWARAI</footer>
 </body>
-</html>
+</html> 
